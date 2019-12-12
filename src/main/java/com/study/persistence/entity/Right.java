@@ -1,22 +1,27 @@
 package com.study.persistence.entity;
 
 
+import org.hibernate.Hibernate;
+
 import javax.persistence.*;
+import java.util.Objects;
 
 @Entity
 @Table(name = "rights")
 public class Right {
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
-    private int id;
+    private Long id;
     @Column(name = "right_title")
     private String  title;
 
-    public int getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
@@ -29,25 +34,22 @@ public class Right {
     }
 
     @Override
-    public boolean equals(Object obj) {
-        if (obj == this) return true;
-        if (!(obj instanceof Right)) {
-            return false;
-        }
-        Right right = (Right) obj;
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || !getClass().equals(Hibernate.getClass(o))) return false;
 
-        return id == right.getId() && (title == null ? right.getTitle() == null : title.equals(right.getTitle()));
+        Right that = (Right) o;
+
+        return getId() != null && getId().equals(that.getId());
     }
 
     @Override
     public int hashCode() {
-        int result = 10;
-        result = 31 * result + id + (title == null ? 0 : title.hashCode());
-        return result;
+        return Objects.hash(id);
     }
 
     @Override
     public String toString() {
-        return "ID " + id + ", title " + title;
+        return String.format("Entity of type %s with id: $s", getClass().getName(), getId());
     }
 }

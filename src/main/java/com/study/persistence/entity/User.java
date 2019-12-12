@@ -1,13 +1,18 @@
 package com.study.persistence.entity;
 
+import org.hibernate.Hibernate;
+
 import javax.persistence.*;
+import java.util.Objects;
 
 @Entity
 @Table(name = "users")
 public class User {
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
-    private int id;
+    private Long id;
     @Column(name = "login")
     private String login;
     @Column(name = "user_password")
@@ -23,11 +28,11 @@ public class User {
     private Role role;
 
 
-    public void setId(int id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
-    public int getId() {
+    public Long getId() {
         return id;
     }
 
@@ -77,5 +82,25 @@ public class User {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || !getClass().equals(Hibernate.getClass(o))) return false;
+
+        User that = (User) o;
+
+        return getId() != null && getId().equals(that.getId());
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id);
+    }
+
+    @Override
+    public String toString() {
+        return String.format("Entity of type %s with id: $s", getClass().getName(), getId());
     }
 }

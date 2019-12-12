@@ -1,22 +1,32 @@
 package com.study.persistence.entity;
 
+import org.hibernate.Hibernate;
+
+import javax.persistence.*;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Objects;
 
+@Entity
+@Table(name = "conferences")
 public class Conference {
-    private int id;
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id")
+    private Long id;
     private String theme;
     private LocalDateTime plannedDateTime;
     private LocalDateTime happenedDateTime;
     private String address;
+    @OneToMany(mappedBy = "conference", fetch = FetchType.EAGER)
     private List<Report> reports;
 
-    public int getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
@@ -61,22 +71,22 @@ public class Conference {
     }
 
     @Override
-    public int hashCode(){
-        return Objects.hash(id, theme, address, happenedDateTime, plannedDateTime, reports);
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || !getClass().equals(Hibernate.getClass(o))) return false;
+
+        Conference that = (Conference) o;
+
+        return getId() != null && getId().equals(that.getId());
     }
 
     @Override
-    public boolean equals(final Object obj){
-        if(obj instanceof Conference){
-            final Conference other = (Conference) obj;
-            return Objects.deepEquals(reports, other.getId())
-                    && id == other.getId()
-                    && Objects.equals(theme,other.getTheme())
-                    && Objects.equals(plannedDateTime, other.getPlannedDateTime())
-                    && Objects.equals(happenedDateTime, other.getHappenedDateTime())
-                    && Objects.equals(address, other.getAddress());
-        } else{
-            return false;
-        }
+    public int hashCode() {
+        return Objects.hash(id);
+    }
+
+    @Override
+    public String toString() {
+        return String.format("Entity of type %s with id: $s", getClass().getName(), getId());
     }
 }

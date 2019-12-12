@@ -1,5 +1,7 @@
 package com.study.persistence.entity;
 
+import org.hibernate.Hibernate;
+
 import javax.persistence.*;
 import java.util.Objects;
 
@@ -8,8 +10,10 @@ import java.util.Objects;
 @SecondaryTable(name = "users", pkJoinColumns = @PrimaryKeyJoinColumn(name = "id"))
 public class Speaker {
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
-    private int id;
+    private Long id;
     @Column(table = "users", name = "login")
     private String login;
     @Column(table = "users", name = "user_password")
@@ -24,31 +28,31 @@ public class Speaker {
     @JoinColumn(table = "users", name = "user_role", referencedColumnName = "id")
     private Role role;
     @Column(name = "rating")
-    private int rating;
+    private Integer rating;
     @Column(name = "bonuses")
-    private int bonuses;
+    private Integer bonuses;
 
-    public int getRating() {
+    public Integer getRating() {
         return rating;
     }
 
-    public void setRating(int rating) {
+    public void setRating(Integer rating) {
         this.rating = rating;
     }
 
-    public int getBonuses() {
+    public Integer getBonuses() {
         return bonuses;
     }
 
-    public void setBonuses(int bonuses) {
+    public void setBonuses(Integer bonuses) {
         this.bonuses = bonuses;
     }
 
-    public void setId(int id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
-    public int getId() {
+    public Long getId() {
         return id;
     }
 
@@ -101,37 +105,22 @@ public class Speaker {
     }
 
     @Override
-    public int hashCode(){
-        return Objects.hash(login, password, firstName, lastName, email, role);
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || !getClass().equals(Hibernate.getClass(o))) return false;
+
+        Speaker that = (Speaker) o;
+
+        return getId() != null && getId().equals(that.getId());
     }
 
     @Override
-    public boolean equals(final Object obj){
-        if(obj instanceof Speaker){
-            final Speaker other = (Speaker) obj;
-            return Objects.deepEquals(role, other.getRole())
-                    && Objects.equals(login, other.getLogin())
-                    && Objects.equals(password,other.getPassword())
-                    && Objects.equals(firstName, other.getFirstName())
-                    && Objects.equals(lastName, other.getLastName())
-                    && Objects.equals(email, other.getEmail())
-                    && rating == other.getRating()
-                    && bonuses == bonuses;
-        } else{
-            return false;
-        }
+    public int hashCode() {
+        return Objects.hash(id);
     }
 
     @Override
     public String toString() {
-        return "UserDTO{" +
-                "id=" + id +
-                ", login='" + login + '\'' +
-                ", password='" + password + '\'' +
-                ", firstName='" + firstName + '\'' +
-                ", lastName='" + lastName + '\'' +
-                ", email='" + email + '\'' +
-                ", role=" + role +
-                '}';
+        return String.format("Entity of type %s with id: $s", getClass().getName(), getId());
     }
 }

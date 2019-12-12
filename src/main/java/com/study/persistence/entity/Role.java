@@ -1,14 +1,19 @@
 package com.study.persistence.entity;
 
+import org.hibernate.Hibernate;
+
 import javax.persistence.*;
 import java.util.List;
+import java.util.Objects;
 
 @Entity
 @Table(name = "user_role")
 public class Role {
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
-    private int id;
+    private Long id;
     @Column(name = "role_name")
     private String roleTitle;
     @ManyToMany(fetch = FetchType.EAGER)
@@ -17,14 +22,16 @@ public class Role {
             inverseJoinColumns = @JoinColumn(name = "right_id"))
     private List<Right> rights;
 
+
+
     public Role() {
     }
 
-    public int getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
@@ -45,27 +52,22 @@ public class Role {
     }
 
     @Override
-    public boolean equals(Object obj) {
-        if (obj == this) return true;
-        if (!(obj instanceof Role)) {
-            return false;
-        }
-        Role role = (Role) obj;
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || !getClass().equals(Hibernate.getClass(o))) return false;
 
-        return id == role.getId()
-                && (roleTitle == null ? role.getRoleTitle() == null : roleTitle.equals(role.getRoleTitle()))
-                && (rights == null ? role.getRights() == null : rights.equals(role.getRights()));
+        Role that = (Role) o;
+
+        return getId() != null && getId().equals(that.getId());
     }
 
     @Override
     public int hashCode() {
-        int result = 10;
-        result = 31 * result + id + (roleTitle == null ? 0 : roleTitle.hashCode()) + (rights == null ? 0 : rights.hashCode());
-        return result;
+        return Objects.hash(id);
     }
 
     @Override
     public String toString() {
-        return "Role ID " + id + ", roleTitle " + roleTitle;
+        return String.format("Entity of type %s with id: $s", getClass().getName(), getId());
     }
 }
