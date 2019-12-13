@@ -3,15 +3,12 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ page isELIgnored="false" %>
 <%@ page session="true" %>
-
-<fmt:setLocale value="${sessionScope.locale}"/>
-<fmt:setBundle basename="${sessionScope.bundle}"/>
+<%@taglib uri="http://www.springframework.org/tags" prefix="spring"%>
 
 <html lang="${sessionScope.locale}">
     <head>
         <!-- Required meta tags -->
         <meta charset="utf-8">
-		<base href="${pageContext.request.contextPath}/">
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
         <link rel="icon" href="img/favicon.png" type="image/png">
         <title>Conferences</title>
@@ -38,7 +35,7 @@
 				<div class="container">
 					<div class="banner_content">
 						<h2>
-							<fmt:message key="index.home.banner.area"/>
+							<spring:message code="index.home.banner.area"/>
 						</h2>
 					</div>
 				</div>

@@ -11,6 +11,7 @@ public class User {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Access(value = AccessType.PROPERTY)
     @Column(name = "id")
     private Long id;
     @Column(name = "login")
@@ -23,7 +24,7 @@ public class User {
     private String lastName;
     @Column(name = "email")
     private String email;
-    @ManyToOne(fetch = FetchType.EAGER)
+    @ManyToOne
     @JoinColumn(name = "user_role", referencedColumnName = "id")
     private Role role;
 

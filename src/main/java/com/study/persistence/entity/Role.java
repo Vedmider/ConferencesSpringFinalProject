@@ -13,6 +13,7 @@ public class Role {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
+    @Access(value = AccessType.PROPERTY)
     private Long id;
     @Column(name = "role_name")
     private String roleTitle;
@@ -21,7 +22,6 @@ public class Role {
             joinColumns = @JoinColumn(name = "role_id"),
             inverseJoinColumns = @JoinColumn(name = "right_id"))
     private List<Right> rights;
-
 
 
     public Role() {

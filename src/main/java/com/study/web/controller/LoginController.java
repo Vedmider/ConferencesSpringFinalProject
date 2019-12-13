@@ -4,11 +4,13 @@ import com.study.persistence.entity.User;
 import com.study.service.LoginService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpSession;
@@ -29,7 +31,7 @@ public class LoginController {
     }
 
     @PostMapping(value = SLASH_LOGIN)
-    public String performLogin(@RequestBody Map<String, String> params, HttpSession session, ModelMap modelMap){
+    public String performLogin(@RequestParam Map<String, String> params, HttpSession session, ModelMap modelMap){
         String login = params.get("login");
         String password = params.get("password");
         User user = loginService.performLogin(login, password);

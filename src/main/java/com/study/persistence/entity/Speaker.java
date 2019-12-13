@@ -7,25 +7,25 @@ import java.util.Objects;
 
 @Entity
 @Table(name = "speaker")
-@SecondaryTable(name = "users", pkJoinColumns = @PrimaryKeyJoinColumn(name = "id"))
 public class Speaker {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Access(value = AccessType.PROPERTY)
     private Long id;
-    @Column(table = "users", name = "login")
+    @Column( name = "login")
     private String login;
-    @Column(table = "users", name = "user_password")
+    @Column(name = "password")
     private String password;
-    @Column(table = "users", name = "first_name")
+    @Column( name = "first_name")
     private String firstName;
-    @Column(table = "users", name = "last_name")
+    @Column( name = "last_name")
     private String lastName;
-    @Column(table = "users", name = "email")
+    @Column( name = "email")
     private String email;
-    @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(table = "users", name = "user_role", referencedColumnName = "id")
+    @ManyToOne
+    @JoinColumn(name = "speaker_role", referencedColumnName = "id")
     private Role role;
     @Column(name = "rating")
     private Integer rating;

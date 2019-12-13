@@ -16,7 +16,9 @@ public class Conference {
     @Column(name = "id")
     private Long id;
     private String theme;
+    @Column(name = "date_time_planned")
     private LocalDateTime plannedDateTime;
+    @Column(name = "date_time_happened")
     private LocalDateTime happenedDateTime;
     private String address;
     @OneToMany(mappedBy = "conference", fetch = FetchType.EAGER)

@@ -13,6 +13,7 @@ public class Right {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
+    @Access(value = AccessType.PROPERTY)
     private Long id;
     @Column(name = "right_title")
     private String  title;

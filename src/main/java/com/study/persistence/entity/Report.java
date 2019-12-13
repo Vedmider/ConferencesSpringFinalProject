@@ -12,6 +12,7 @@ public class Report {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
+    @Access(value = AccessType.PROPERTY)
     private Long id;
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "speaker_id", referencedColumnName = "id")
@@ -21,7 +22,7 @@ public class Report {
     @Column(name = "time_start")
     private LocalTime timeStart;
     @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "conference_id")
+    @JoinColumn(name = "conference_id", referencedColumnName = "id", nullable=false)
     private Conference conference;
     private Integer registered;
     private Integer attended;
