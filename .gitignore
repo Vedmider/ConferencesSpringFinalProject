@@ -14,7 +14,9 @@
 
 .idea
 *.iml
-
+*.log
+*.tmp
+*.gz
 .classpath
 .project
 .settings/
